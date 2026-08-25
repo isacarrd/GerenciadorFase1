@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
+
+@theme{
+  --font-inter: "Inter", sans-serif;
+}
 
 :root {
   --preto: #0c0c0c;
@@ -6,11 +11,11 @@
   --branco: #e5e4df;
   --noEstoque: #828282;
   --verdePrim: #87a442;
-  --verdeSec: #737A58;
-  --cinza: #D0D0D0;
-  --error: #D34C46;
-  --marrom: #913F1D;
+  --verdeSec: #737a58;
+  --cinza: #d0d0d0;
+  --error: #d34c46;
+  --marrom: #913f1d;
 
-  --searchBar: #rgba(34, 52, 9, 0.5);
-  --searchBarEffect: #rgba(67, 74, 17, 0.2);
+  --searchBar: rgba(34, 52, 9, 0.5);
+  --searchBarEffect: rgba(67, 74, 17, 0.2);
 }
