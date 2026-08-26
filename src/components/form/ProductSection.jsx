@@ -1,4 +1,5 @@
-import { CategorySpanMain } from "../ui/CategorySpan";
+import { CategorySpanMain, CategoryProduct } from "../ui/CategorySpan";
+import ProductCard from "./ProductCard";
 import createElementIco from '../../assets/create.svg'
 
 export default function ProductSection() {
@@ -16,6 +17,8 @@ export default function ProductSection() {
             <CategorySpanMain>Categoria</CategorySpanMain>
             <CategorySpanMain>Categoria</CategorySpanMain>
             <CategorySpanMain>Categoria</CategorySpanMain>
+            <CategoryProduct active={true}>Categoria tiva</CategoryProduct>
+            <CategoryProduct active={false}>Categoria desativada</CategoryProduct>
           </div>
         </div>
         <button id="createProduct"
@@ -29,7 +32,7 @@ export default function ProductSection() {
         </button>
       </div>
       <div id="products" className="w-full flex flex-row flex-wrap justify-between">
-        <p>oii</p>
+        <ProductCard prodNome={'NOME'} prodDesc={'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'} prodCateg={'Categoria'} prodQuant={1} />
       </div>
     </section>
   );
