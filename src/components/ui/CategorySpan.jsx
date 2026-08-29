@@ -26,7 +26,7 @@ export function CategoryProduct({ children, active }) {
   }
 }
 
-export function SelectCategoryCreate({}) {
+export function SelectCategory({}) {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -100,4 +100,4 @@ export function SelectCategoryCreate({}) {
   );
 }
 
-export function SelectCategory({ children }) {}
+export function SelectCategoryCreate({ children }) {}
