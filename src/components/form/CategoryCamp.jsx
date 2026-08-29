@@ -52,7 +52,7 @@ export default function CategoryCamp({ categorias, counter }) {
 
         {/* Tags de Categorias Adicionadas */}
         {categorias.length === 0 ? (
-          <span className="font-inter text-(--error) font-medium text-[10px] lg:text-xs ">
+          <span className="font-inter text-(--error) font-medium text-xs lg:text-sm">
             Não pode ficar vazio, por favor selecione uma categoria.
           </span>
         ) : (
