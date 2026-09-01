@@ -1,18 +1,28 @@
-import required from "../../assets/required.svg";
 import addCategory from "../../assets/create.svg";
+import required from "../../assets/required.svg";
+import { SelectCategoryCreate } from "../ui/CategorySpan";
 
 export default function CategoryCamp({ categorias, counter }) {
-  // Função simulando a seleção de uma nova categoria no Select
-  const onSelectCategoria = (novaCategoria) => {
-    // Evita adicionar se o limite já foi atingido ou se a categoria já existe
-    if (counter.remaining > 0 && !categorias.includes(novaCategoria)) {
-      const novoArray = [...categorias, novaCategoria];
+  // Adiciona um "slot" vazio para um novo Select
+  const adicionarCampo = () => {
+    if (counter.remaining > 0) {
+      const novoArray = [...categorias, ""];
       counter.handleArrayChange(novoArray);
     }
   };
 
-  const removerCategoria = (catRemovida) => {
-    const novoArray = categorias.filter((cat) => cat !== catRemovida);
+  // Remove a categoria baseada no index dela no array
+  const removerCategoria = (indexParaRemover) => {
+    const novoArray = categorias.filter(
+      (_, index) => index !== indexParaRemover
+    );
+    counter.handleArrayChange(novoArray);
+  };
+
+  // Atualiza o valor de uma categoria específica quando o usuário escolhe no Select
+  const atualizarCategoria = (indexAtualizado, novoValor) => {
+    const novoArray = [...categorias];
+    novoArray[indexAtualizado] = novoValor;
     counter.handleArrayChange(novoArray);
   };
 
@@ -39,7 +49,7 @@ export default function CategoryCamp({ categorias, counter }) {
       <div className="w-full flex flex-row items-center px-2 py-2 gap-2 lg:px-4 lg:py-4 bg-(--cinza) rounded-lg lg:rounded-2xl">
         {/* Botão de Adicionar (+) */}
         <button
-          onClick={() => onSelectCategoria("Nova Categoria Teste")}
+          onClick={adicionarCampo}
           disabled={counter.remaining === 0}
           className="cursor-pointer bg-(--verdePrim) w-8 h-8 lg:w-14 lg:h-14 rounded-[10px] lg:rounded-[15px] flex items-center justify-center disabled:bg-(--noEstoque)"
         >
@@ -57,13 +67,13 @@ export default function CategoryCamp({ categorias, counter }) {
           </span>
         ) : (
           categorias.map((cat, index) => (
-            <span
+            <SelectCategoryCreate
               key={index}
-              className="bg-gray-300 px-3 py-1 rounded-full text-sm flex gap-2"
-            >
-              {cat}
-              <button onClick={() => removerCategoria(cat)}>x</button>
-            </span>
+              index={index}
+              valorAtual={cat} // Passando o valor salvo no pai
+              onRemove={removerCategoria} // Passando a função de fechar
+              onSelect={atualizarCategoria} // Passando a função de atualizar
+            />
           ))
         )}
       </div>
