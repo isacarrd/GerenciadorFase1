@@ -101,7 +101,7 @@ export function SelectCategory({}) {
   );
 }
 
-export function SelectCategoryCreate({ index, valorAtual, onRemove, onSelect }) {
+export function SelectCategoryCreate({ index, valorAtual, todasSelecionadas, onRemove, onSelect }) {
   const [open, setOpen] = useState(false);
 
   function getCategoriasUnicas() {
@@ -112,10 +112,13 @@ export function SelectCategoryCreate({ index, valorAtual, onRemove, onSelect }) 
     return Array.from(new Set(allCategories));
   }
 
-  const categorias = getCategoriasUnicas();
+  const allCategories = getCategoriasUnicas();
+
+  // Remove as que já estão no array do pai, EXCETO a que está selecionada neste exato campo
+  const categoriasDisponiveis = allCategories.filter((categ) => !todasSelecionadas.includes(categ) || categ === valorAtual)
 
   // Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
-  const maiorPalavra = [...categorias, "Categoria"].reduce(
+  const maiorPalavra = [...allCategories, "Categoria"].reduce(
     (a, b) => (a.length > b.length ? a : b),
     ""
   );
@@ -154,7 +157,7 @@ export function SelectCategoryCreate({ index, valorAtual, onRemove, onSelect }) 
             className="w-5 h-5 shrink-0 flex items-center justify-center hover:bg-(--cinza) rounded-full cursor-pointer z-10"
             onClick={(e) => {
               e.stopPropagation();
-              onRemove(index)
+              onRemove(index);
             }}
           >
             <img
@@ -190,11 +193,13 @@ export function SelectCategoryCreate({ index, valorAtual, onRemove, onSelect }) 
             : "max-h-0 border-0 opacity-0"
         } rounded-b-[20px] shadow-lg`}
       >
-        {categorias.map((categ) => {
+        {categoriasDisponiveis.map((categ) => {
           return (
             <li
               key={categ}
-              className="w-full px-3 py-2 text-left hover:bg-(--verdePrim) cursor-pointer transition-colors whitespace-nowrap"
+              className={`w-full px-3 py-2 text-left hover:bg-(--verdePrim) cursor-pointer transition-colors whitespace-nowrap ${
+                categ === valorAtual ? "bg-(--verdePrim)" : ""
+              }`}
               onClick={() => {
                 onSelect(index, categ);
                 setOpen(false);
