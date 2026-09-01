@@ -71,6 +71,7 @@ export default function CategoryCamp({ categorias, counter }) {
               key={index}
               index={index}
               valorAtual={cat} // Passando o valor salvo no pai
+              todasSelecionadas={categorias} // Passa o array completo de categorias como uma nova prop para o filho
               onRemove={removerCategoria} // Passando a função de fechar
               onSelect={atualizarCategoria} // Passando a função de atualizar
             />
