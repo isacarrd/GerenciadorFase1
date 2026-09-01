@@ -42,7 +42,7 @@ export default function CreateProduct({ isOpen, onClose }) {
       <h2 className="break-all font-inter font-bold text-(--preto) text-2xl lg:text-[32px]">
         NOVO PRODUTO
       </h2>
-      <div className="elements w-full flex flex-col gap-2.5 lg:gap-5">
+      <div id="elements" className="w-full flex flex-col gap-2.5 lg:gap-5">
         {/* Imagem */}
         <div className="imagem flex flex-col gap-2">
           <label
@@ -161,6 +161,26 @@ export default function CreateProduct({ isOpen, onClose }) {
             />
           </div>
         </div>
+      </div>
+      {/* Botões: Cancelar | Criar */}
+      <div
+        id="alteracoes"
+        className="w-full font-inter font-medium text-xs lg:text-base flex flex-row justify-end gap-3 lg:gap-4"
+      >
+        <button
+          type="button"
+          id="btnCancel"
+          className="cursor-pointer border-2 border-(--error) rounded-[5px] p-3 text-(--error) hover:bg-(--error) hover:text-(--branco)"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          id="btnCreate"
+          className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
+        >
+          Criar
+        </button>
       </div>
     </div>
   );
