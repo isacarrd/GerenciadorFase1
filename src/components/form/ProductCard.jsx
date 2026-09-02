@@ -2,17 +2,27 @@ import editAllowed from "../../assets/edit.svg";
 import noEditAllowed from "../../assets/noEditAllowed.svg";
 import noImg from "../../assets/noImg.svg";
 import { CategoryProduct } from "../ui/CategorySpan";
+import EditProduct from "./EditProduct";
+import { useState } from "react";
 
 export default function ProductCard({
+  prodId,
   prodImg = "",
   prodNome,
   prodDesc,
   prodCateg,
   prodQuant,
 }) {
+
+  const handleClose = () => {
+    setModalEditarAtivo(null);
+  };
+
+  const [modalEditar, setModalEditarAtivo] = useState(null);
+
   if (prodQuant > 0) {
     return (
-      <div className="rounded-[15px] overflow-hidden border border-(--verdePrim) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
+      <div id={prodId} className="rounded-[15px] overflow-hidden border border-(--verdePrim) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
         <div className="imgArea overflow-hidden flex flex-row items-center justify-center bg-(--verdePrim) w-full h-50 lg:h-90">
           <img
             src={prodImg || noImg}
@@ -25,7 +35,10 @@ export default function ProductCard({
             <h3 className="font-inter font-bold text-(--preto) text-sm lg:text-2xl">
               {prodNome}
             </h3>
-            <button className="editarProduto cursor-pointer">
+            <button
+              className="editarProduto cursor-pointer"
+              onClick={() => setModalEditarAtivo(true)}
+            >
               <img
                 src={editAllowed}
                 alt="Editar Produto"
@@ -51,11 +64,15 @@ export default function ProductCard({
             ESTOQUE: {String(prodQuant).padStart(2, "0")}
           </span>
         </div>
+        {/* Passa a props pro filho */}
+        {modalEditar && (
+          <EditProduct isOpen={modalEditar} onClose={handleClose} key={prodId} id={prodId} />
+        )}
       </div>
     );
   } else {
     return (
-      <div className="cursor-not-allowed rounded-[15px] overflow-hidden border border-(--noEstoque) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
+      <div id={prodId} className="cursor-not-allowed rounded-[15px] overflow-hidden border border-(--noEstoque) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
         <div className="imgArea overflow-hidden flex flex-row items-center justify-center bg-(--noEstoque) w-full h-50 lg:h-90">
           <img
             src={prodImg || noImg}
@@ -84,9 +101,7 @@ export default function ProductCard({
             </div>
             <div className="categorias flex flex-row gap-1.5 lg:gap-3">
               {prodCateg.map((categ) => (
-                <CategoryProduct
-                  key={categ}
-                  active={false}>
+                <CategoryProduct key={categ} active={false}>
                   {categ}
                 </CategoryProduct>
               ))}
