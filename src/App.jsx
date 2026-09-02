@@ -2,11 +2,7 @@ import "./index.css";
 import Header from "./components/ui/Header";
 import SearchSection from "./components/form/SearchSection";
 import ProductSection from "./components/form/ProductSection";
-import CreateProduct from "./components/form/CreateProduct";
-import {
-  SelectCategory,
-  SelectCategoryCreate,
-} from "./components/ui/CategorySpan";
+import EditProduct from "./components/form/EditProduct";
 
 export default function App() {
   return (
