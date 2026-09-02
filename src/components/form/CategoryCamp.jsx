@@ -27,7 +27,7 @@ export default function CategoryCamp({ categorias, counter }) {
   };
 
   return (
-    <div className="categorias w-full flex flex-col gap-1 lg:gap-2">
+    <div className="categorias max-w-57.5 lg:max-w-118.75 flex flex-wrap flex-col gap-1 lg:gap-2">
       <span className="flex flex-row items-center justify-between flex-wrap">
         <label
           htmlFor="categProduto"
@@ -46,7 +46,7 @@ export default function CategoryCamp({ categorias, counter }) {
         </span>
       </span>
 
-      <div className="w-full flex flex-row items-center px-2 py-2 gap-2 lg:px-4 lg:py-4 bg-(--cinza) rounded-lg lg:rounded-2xl">
+      <div className="w-full flex-wrap flex flex-row items-center px-2 py-2 gap-2 lg:px-4 lg:py-4 bg-(--cinza) rounded-lg lg:rounded-2xl">
         {/* Botão de Adicionar (+) */}
         <button
           onClick={adicionarCampo}
@@ -61,22 +61,24 @@ export default function CategoryCamp({ categorias, counter }) {
         </button>
 
         {/* Tags de Categorias Adicionadas */}
-        {categorias.length === 0 ? (
-          <span className="font-inter text-(--error) font-medium text-xs lg:text-sm">
-            Não pode ficar vazio, por favor selecione uma categoria.
-          </span>
-        ) : (
-          categorias.map((cat, index) => (
-            <SelectCategoryCreate
-              key={index}
-              index={index}
-              valorAtual={cat} // Passando o valor salvo no pai
-              todasSelecionadas={categorias} // Passa o array completo de categorias como uma nova prop para o filho
-              onRemove={removerCategoria} // Passando a função de fechar
-              onSelect={atualizarCategoria} // Passando a função de atualizar
-            />
-          ))
-        )}
+
+          {categorias.length === 0 ? (
+            <span className="font-inter text-(--error) font-medium text-xs lg:text-sm">
+              Não pode ficar vazio, por favor selecione uma categoria.
+            </span>
+          ) : (
+            categorias.map((cat, index) => (
+              <SelectCategoryCreate
+                key={index}
+                index={index}
+                valorAtual={cat} // Passando o valor salvo no pai
+                todasSelecionadas={categorias} // Passa o array completo de categorias como uma nova prop para o filho
+                onRemove={removerCategoria} // Passando a função de fechar
+                onSelect={atualizarCategoria} // Passando a função de atualizar
+              />
+            ))
+          )}
+
       </div>
     </div>
   );
