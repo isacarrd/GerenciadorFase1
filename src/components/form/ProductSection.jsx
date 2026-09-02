@@ -15,7 +15,7 @@ export default function ProductSection() {
   return (
     <section className="w-full flex flex-col gap-3 lg:gap-10">
       <div className="w-full flex flex-row items-center justify-between">
-        <div id="aboutProduct" className="flex flex-col w-fit gap-3 lg:gap-10">
+        <div id="aboutProduct" className="flex flex-col w-fit gap-2 lg:gap-4">
           <h4 className="text-(--preto) text-xs lg:text-base font-bold font-inter">
             Produtos:
           </h4>
@@ -46,6 +46,7 @@ export default function ProductSection() {
         {produtosTeste.map((prod) => (
           <ProductCard
             key={prod.id}
+            prodId={prod.id}
             prodImg={prod.imgProduto}
             prodNome={prod.nomeProduto}
             prodCateg={prod.categProduto}
