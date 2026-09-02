@@ -9,8 +9,7 @@ export default function ProductCard({
   prodDesc,
   prodCateg,
   prodQuant,
-})
-{
+}) {
   if (prodQuant > 0) {
     return (
       <div className="rounded-[15px] overflow-hidden border border-(--verdePrim) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
@@ -42,12 +41,14 @@ export default function ProductCard({
             </div>
             <div className="categorias flex flex-row gap-1.5 lg:gap-3">
               {prodCateg.map((categ) => (
-                <CategoryProduct active={false}>{categ}</CategoryProduct>
+                <CategoryProduct key={categ} active={true}>
+                  {categ}
+                </CategoryProduct>
               ))}
             </div>
           </div>
           <span className="font-inter text-(--preto) font-bold text-[10px] lg:text-base">
-            ESTOQUE: {String(prodQuant).padStart(2, '0')}
+            ESTOQUE: {String(prodQuant).padStart(2, "0")}
           </span>
         </div>
       </div>
@@ -83,7 +84,11 @@ export default function ProductCard({
             </div>
             <div className="categorias flex flex-row gap-1.5 lg:gap-3">
               {prodCateg.map((categ) => (
-                <CategoryProduct active={false}>{categ}</CategoryProduct>
+                <CategoryProduct
+                  key={categ}
+                  active={false}>
+                  {categ}
+                </CategoryProduct>
               ))}
             </div>
           </div>
