@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
 import { useCharCounter } from "../../data/useCharCounter";
+import { validarCampos } from "../../data/validacaoSimples";
 
 import CategoryCamp from "./CategoryCamp";
 
@@ -17,7 +18,14 @@ export default function CreateProduct({ isOpen, onClose }) {
   const descCounter = useCharCounter(prodDesc, setProdDesc, 200);
   const categCounter = useCharCounter(prodCateg, setProdCateg, 5);
 
-  if (!isOpen) return null;
+  const handleValidarCampos = () => {
+    validarCampos(prodNome, prodDesc, prodCateg, prodQuant);
+    setProdImg("");
+    setProdNome("");
+    setProdDesc("");
+    setProdCateg([]);
+    setProdQuant("");
+  };
 
   // função de acessibilidade
   useEffect(() => {
@@ -25,17 +33,19 @@ export default function CreateProduct({ isOpen, onClose }) {
       if (e.key === "Escape") onClose();
       
     };
-
+    
     // só add o listener se o modal estiver aberto
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
     }
-
+    
     // remove o listener quando o modal fechar ou desmontar
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
+  
+  if (!isOpen) return null; 
 
   return (
     <div className="w-screen h-svh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
@@ -179,7 +189,7 @@ export default function CreateProduct({ isOpen, onClose }) {
             type="button"
             id="btnCreate"
             className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
-            onClick={(e) => console.log(`Imagem: ${prodImg} \nNome: ${prodNome} \n Descrição: ${prodDesc} \n Categoria(s): ${prodCateg} \n Quantidade: ${prodQuant}`)}
+            onClick={handleValidarCampos}
             aria-label="Botão de criar Produto"
           >
             Criar
