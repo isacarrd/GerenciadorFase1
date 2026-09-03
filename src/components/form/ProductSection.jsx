@@ -42,7 +42,10 @@ export default function ProductSection() {
           />
         </button>
       </div>
-      <div className="products w-full h-fit flex flex-col flex-wrap items-center justify-between gap-4 md:flex-row lg:gap-y-10.5">
+      <div
+        id="products"
+        className="w-full h-fit flex flex-col flex-wrap items-center justify-between gap-4 md:flex-row lg:gap-y-10.5"
+      >
         {produtosTeste.map((prod) => (
           <ProductCard
             key={prod.id}
