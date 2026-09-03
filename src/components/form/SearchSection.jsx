@@ -1,5 +1,5 @@
 import searchLupa from "../../assets/search.svg";
-// Sem lógica funcional no momento
+import { barraPesquisa } from "../../data/barraPesquisa";
 
 export default function SearchSection() {
   return (
@@ -28,6 +28,7 @@ export default function SearchSection() {
           name="searchBar"
           id="searchBar"
           placeholder="placeholder de teste"
+          onChange={(e) => barraPesquisa(e.target.value.toLowerCase())}
           className="
             w-full
             font-inter
