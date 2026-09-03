@@ -80,7 +80,10 @@ export default function ProductCard({
     );
   } else {
     return (
-      <div id={prodId} className="cursor-not-allowed rounded-[15px] overflow-hidden border border-(--noEstoque) w-68.75 lg:w-125 flex flex-col bg-(--branco)">
+      <div
+        id={`product-${prodId}`}
+        className="cursor-not-allowed rounded-[15px] overflow-hidden border border-(--noEstoque) w-68.75 lg:w-125 flex flex-col bg-(--branco)"
+      >
         <div className="imgArea overflow-hidden flex flex-row items-center justify-center bg-(--noEstoque) w-full h-50 lg:h-90">
           <img
             src={prodImg || noImg}
