@@ -25,7 +25,7 @@ export default function ProductSection() {
           >
             {produtosTeste.map((prod) =>
               prod.categProduto.map((categ) => (
-                <CategorySpanMain>{categ}</CategorySpanMain>
+                <CategorySpanMain key={categ}>{categ}</CategorySpanMain>
               ))
             )}
           </div>
