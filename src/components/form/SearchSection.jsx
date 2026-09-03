@@ -27,7 +27,7 @@ export default function SearchSection() {
           type="text"
           name="searchBar"
           id="searchBar"
-          placeholder="placeholder de teste"
+          // placeholder="placeholder de teste"
           onChange={(e) => barraPesquisa(e.target.value.toLowerCase())}
           className="
             w-full
