@@ -13,6 +13,11 @@ export function barraPesquisa(campo) {
   if (campo.trim() === "") {
     cards.forEach((card) => {
       card.style.display = "";
+
+      // Removendo a mensagem (evitando que ela apareça mesmo após apagar o campo)
+      if (mensagemAnterior) {
+        mensagemAnterior.remove()
+      }
     });
     return;
   }
@@ -38,7 +43,7 @@ export function barraPesquisa(campo) {
     }
   });
 
-  // Remove mensagem anterior
+  // Remove mensagem anterior antes de uma pesquisa
   const mensagemAnterior = document.getElementById("mensagemPesquisa");
   if (mensagemAnterior) {
     mensagemAnterior.remove();
