@@ -1,8 +1,8 @@
 import { useState } from "react";
 import createElementIco from "../../assets/create.svg";
 import { CategoryProduct, CategorySpanMain } from "../ui/CategorySpan";
-import ProductCard from "./ProductCard";
-import CreateProduct from "./CreateProduct";
+import ProductCard from "../form/ProductCard";
+import CreateProduct from "../form/CreateProduct";
 import { produtosTeste } from "../../data/listaProdutosTeste";
 
 export default function ProductSection() {
