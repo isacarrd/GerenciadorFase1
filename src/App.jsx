@@ -1,8 +1,7 @@
 import "./index.css";
 import Header from "./components/ui/Header";
-import SearchSection from "./components/form/SearchSection";
-import ProductSection from "./components/form/ProductSection";
-import EditProduct from "./components/form/EditProduct";
+import ProductSection from "./components/screen/ProductSection";
+import SearchSection from "./components/screen/SearchSection";
 
 export default function App() {
   return (
