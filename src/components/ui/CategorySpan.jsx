@@ -27,8 +27,8 @@ export function CategoryProduct({ children, active }) {
   }
 }
 
-export function SelectCategory({}) {
-  const [selected, setSelected] = useState("");
+export function SelectCategory({ onChange }) {
+  const [selected, setSelected] = useState("Categorias");
   const [open, setOpen] = useState(false);
 
   function getCategoriasUnicas() {
@@ -39,7 +39,7 @@ export function SelectCategory({}) {
     return Array.from(new Set(allCategories));
   }
 
-  const categorias = getCategoriasUnicas();
+  const categorias = ["Categorias", ...getCategoriasUnicas()];
 
   // Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
   const maiorPalavra = [...categorias, "Categoria"].reduce(
@@ -90,7 +90,9 @@ export function SelectCategory({}) {
               onClick={() => {
                 setSelected(categ);
                 setOpen(false);
-              }}
+                onChange(categ);
+              }
+            }
             >
               {categ}
             </li>
