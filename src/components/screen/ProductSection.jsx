@@ -1,16 +1,18 @@
 import { useState } from "react";
 import createElementIco from "../../assets/create.svg";
-import { CategoryProduct, CategorySpanMain } from "../ui/CategorySpan";
+import { SelectCategory, CategorySpanMain } from "../ui/CategorySpan";
 import ProductCard from "../form/ProductCard";
 import CreateProduct from "../form/CreateProduct";
 import { produtosTeste } from "../../data/listaProdutosTeste";
+import { selectPesquisa } from "../../data/selectPesquisa"; 
 
 export default function ProductSection() {
+  const [modalCriar, setModalCriarAtivo] = useState(null);
+  const [categSelected, setCategSelected] = useState("Categorias")
+
     const handleClose = () => {
       setModalCriarAtivo(null);
   };
-
-  const [modalCriar, setModalCriarAtivo] = useState(null);
   
   return (
     <section className="w-full flex flex-col gap-3 lg:gap-10">
@@ -23,11 +25,11 @@ export default function ProductSection() {
             id="categories"
             className="w-fit flex flex-row flex-wrap gap-3 lg:gap-2"
           >
-            {produtosTeste.map((prod) =>
-              prod.categProduto.map((categ) => (
-                <CategorySpanMain key={categ}>{categ}</CategorySpanMain>
-              ))
-            )}
+            <SelectCategory onChange={(categ) => {
+              selectPesquisa(categ)
+              setCategSelected(categ)
+              categSelected(categ)
+            }} />
           </div>
         </div>
         <button
@@ -44,7 +46,7 @@ export default function ProductSection() {
       </div>
       <div
         id="products"
-        className="w-full h-fit flex flex-col flex-wrap items-center justify-between gap-4 md:flex-row lg:gap-y-10.5"
+        className="w-full h-fit flex flex-col flex-wrap items-center justify-center gap-4 md:flex-row lg:gap-y-10.5"
       >
         {produtosTeste.map((prod) => (
           <ProductCard
