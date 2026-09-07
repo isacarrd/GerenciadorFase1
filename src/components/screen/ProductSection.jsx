@@ -28,7 +28,6 @@ export default function ProductSection() {
             <SelectCategory onChange={(categ) => {
               selectPesquisa(categ)
               setCategSelected(categ)
-              categSelected(categ)
             }} />
           </div>
         </div>
