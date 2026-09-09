@@ -49,7 +49,10 @@ export default function CreateProduct({ isOpen, onClose }) {
 
   return (
     <div className="w-screen h-dvh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
-      <div className="scrollbar-thumb-(--verdeSec) scrollbar-track-transparent min-w-68.75 max-w-270 bg-(--branco) h-fit max-h-[95vh] overflow-y-auto flex flex-col items-start px-6 py-6 gap-6 lg:gap-8 rounded-[10px] lg:rounded-2xl">
+      <div className="scrollbar-thumb-(--verdeSec) scrollbar-track-transparent 
+      w-68.75 lg:w-2xl 
+      bg-(--branco) h-fit 
+      max-h-[95vh] overflow-y-auto flex flex-col items-start px-6 py-6 gap-6 lg:gap-8 rounded-[10px] lg:rounded-2xl">
         <h2 className="break-all font-inter font-bold text-(--preto) text-2xl lg:text-[32px]">
           NOVO PRODUTO
         </h2>
