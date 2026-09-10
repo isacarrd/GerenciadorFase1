@@ -9,7 +9,7 @@ export default function App() {
     <div className="h-lvh bg-(--bgColor)">
       <Header />
       <main className="flex flex-col px-6 py-12 gap-12 lg:px-25 lg:py-14 lg:gap-30">
-        <CreateCategory isOpen={true}/>
+        {/* <CreateCategory isOpen={true}/> */}
         <SearchSection />
         <ProductSection />
       </main>
