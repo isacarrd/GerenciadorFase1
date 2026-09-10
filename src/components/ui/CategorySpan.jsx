@@ -2,6 +2,7 @@ import { useState } from "react";
 import { produtosTeste } from "../../data/listaProdutosTeste";
 import selectIco from "../../assets/select.svg";
 import removeIco from "../../assets/removeBlack.svg"
+import { getCategoriasUnicas } from "../../data/criarCategoria";
 
 export function CategorySpanMain({ children }) {
   return (
@@ -31,21 +32,18 @@ export function SelectCategory({ onChange }) {
   const [selected, setSelected] = useState("Categorias");
   const [open, setOpen] = useState(false);
 
-  function getCategoriasUnicas() {
-    let allCategories = [];
-    produtosTeste.forEach((prod) => {
-      allCategories.push(...prod.categProduto);
-    });
-    return Array.from(new Set(allCategories));
-  }
-
   const categorias = ["Categorias", ...getCategoriasUnicas()];
 
-  // Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
+// Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
   const maiorPalavra = [...categorias, "Categoria"].reduce(
     (a, b) => (a.length > b.length ? a : b),
     ""
   );
+
+/*   const maiorPalavra = [...categorias, "Categoria"].reduce((a, b) => {
+    console.log("REDUCE:", { a, b });
+    return a.length > b.length ? a : b;
+  }, ""); */
 
   return (
     <div className="relative w-fit flex flex-col font-inter text-xs lg:text-sm font-medium">
