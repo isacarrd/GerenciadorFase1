@@ -1,6 +1,9 @@
 import { useEffect } from "react";
+import { useState } from "react";
+import { criarCategoria } from "../../data/criarCategoria";
 
 export default function CreateCategory({ isOpen, onClose }) {
+  const [nomeCategNova, setNomeCategNova] = useState("")
   // função de acessibilidade
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -40,6 +43,8 @@ export default function CreateCategory({ isOpen, onClose }) {
               type="text"
               required
               name="categName"
+              value={nomeCategNova}
+              onChange={e => setNomeCategNova(e.target.value)}
               id="categName"
               className="bg-(--verdeSec) rounded-[5px] px-2.5 lg:px-3 py-2 text-(--branco) font-inter italic text-[10px] lg:text-xs
               placeholder:font-inter placeholder:text-(--branco) placeholder:italic placeholder:text-[10px] placeholder:lg:text-xs focus:outline-none"
@@ -62,8 +67,7 @@ export default function CreateCategory({ isOpen, onClose }) {
               placeholder="Ex: 'Ferramentas para construção'."
             />
           </div>
-          <div
-            id="buttonsCreateCategory"
+          <div id="buttonsCreateCategory"
             className="w-full font-inter font-medium text-[10px] lg:text-xs flex flex-row justify-end gap-3 lg:gap-4"
           >
             <button
@@ -80,8 +84,16 @@ export default function CreateCategory({ isOpen, onClose }) {
               id="btnCreateCateg"
               className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
               aria-label="Botão de criar Categoria"
+              onClick={() => {
+                if (criarCategoria({ nomeCategNova })) {
+                  setNomeCategNova("");
+                  onClose()
+                } else {
+                  setNomeCategNova("");
+                }
+              }}
             >
-              Criar
+              Criar [teste]
             </button>
           </div>
         </div>
