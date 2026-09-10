@@ -3,15 +3,20 @@ import createElementIco from "../../assets/create.svg";
 import { SelectCategory, CategorySpanMain } from "../ui/CategorySpan";
 import ProductCard from "../form/ProductCard";
 import CreateProduct from "../form/CreateProduct";
+import CreateCategory from "../form/CreateCategory";
 import { produtosTeste } from "../../data/listaProdutosTeste";
 import { selectPesquisa } from "../../data/selectPesquisa"; 
 
 export default function ProductSection() {
   const [modalCriar, setModalCriarAtivo] = useState(null);
+  const [modalCriarCateg, setModalCriarCategAtivo] = useState(null);
   const [categSelected, setCategSelected] = useState("Categorias")
 
     const handleClose = () => {
       setModalCriarAtivo(null);
+  };
+    const handleCloseCateg = () => {
+      setModalCriarCategAtivo(null);
   };
   
   return (
@@ -25,10 +30,18 @@ export default function ProductSection() {
             id="categories"
             className="w-fit flex flex-row flex-wrap gap-3 lg:gap-2"
           >
-            <SelectCategory onChange={(categ) => {
-              selectPesquisa(categ)
-              setCategSelected(categ)
-            }} />
+            <SelectCategory
+              onChange={(categ) => {
+                selectPesquisa(categ);
+                setCategSelected(categ);
+              }}
+            />
+            <button
+              onClick={() => setModalCriarCategAtivo(true)}
+              className="cursor-pointer font-inter font-bold text-[10px] lg:text-sm text-(--verdeSec) bg-(--branco) rounded-full border border-(--verdeSec) px-1 py-1 lg:px-2 lg:py-2 hover:text-(--preto) hover:border-(--preto)"
+            >
+              Criar Categoria
+            </button>
           </div>
         </div>
         <button
@@ -59,6 +72,7 @@ export default function ProductSection() {
           />
         ))}
         {modalCriar && <CreateProduct isOpen={true} onClose={handleClose} />}
+        {modalCriarCateg && <CreateCategory isOpen={true} onClose={handleCloseCateg} />}
       </div>
     </section>
   );
