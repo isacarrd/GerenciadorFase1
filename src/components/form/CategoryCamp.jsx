@@ -53,9 +53,9 @@ export default function CategoryCamp({ categorias, counter }) {
         </span>
       </span>
 
-      <div className="w-full h-fit flex-wrap flex flex-row items-center px-2 py-2 gap-2 lg:px-4 lg:py-4 bg-(--cinza) rounded-lg lg:rounded-2xl">
+      <div className="w-full h-fit flex flex-col items-start px-2 py-2 gap-2 lg:gap-4 lg:px-4 lg:py-4 bg-(--cinza) rounded-lg lg:rounded-2xl">
         {/* Botão de Adicionar (+) */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-row gap-2 items-center flex-wrap">
           <button
             onClick={adicionarCampo}
             disabled={counter.remaining === 0}
@@ -67,33 +67,33 @@ export default function CategoryCamp({ categorias, counter }) {
               className="w-3 h-3 lg:w-6 lg:h-6"
             />
           </button>
-          <button
-            onClick={() => setModalCriarAtivo(true)}
-            className="cursor-pointer font-inter font-bold text-[10px] lg:text-sm text-(--verdeSec) bg-(--branco) rounded-full border border-(--verdeSec) px-1 py-1 lg:px-2 lg:py-2 hover:text-(--preto) hover:border-(--preto)"
-          >
-            Criar Categoria
-          </button>
+
+          {/* Tags de Categorias Adicionadas */}
+
+          {categorias.length === 0 ? (
+            <p className="text-left break-all font-inter text-(--error) font-medium text-xs lg:text-sm">
+              Não pode ficar vazio, por favor selecione uma categoria.
+            </p>
+          ) : (
+            categorias.map((cat, index) => (
+              <SelectCategoryCreate
+                key={index}
+                index={index}
+                valorAtual={cat} // Passando o valor salvo no pai
+                todasSelecionadas={categorias} // Passa o array completo de categorias como uma nova prop para o filho
+                onRemove={removerCategoria} // Passando a função de fechar
+                onSelect={atualizarCategoria} // Passando a função de atualizar
+              />
+            ))
+          )}
+          {modalCriar && <CreateCategory isOpen={true} onClose={handleClose} />}
         </div>
-
-        {/* Tags de Categorias Adicionadas */}
-
-        {categorias.length === 0 ? (
-          <p className="text-left break-all font-inter text-(--error) font-medium text-xs lg:text-sm">
-            Não pode ficar vazio, por favor selecione uma categoria.
-          </p>
-        ) : (
-          categorias.map((cat, index) => (
-            <SelectCategoryCreate
-              key={index}
-              index={index}
-              valorAtual={cat} // Passando o valor salvo no pai
-              todasSelecionadas={categorias} // Passa o array completo de categorias como uma nova prop para o filho
-              onRemove={removerCategoria} // Passando a função de fechar
-              onSelect={atualizarCategoria} // Passando a função de atualizar
-            />
-          ))
-        )}
-        {modalCriar && <CreateCategory isOpen={true} onClose={handleClose} />}
+        <button
+          onClick={() => setModalCriarAtivo(true)}
+          className="cursor-pointer font-inter font-bold text-[10px] lg:text-sm text-(--verdeSec) bg-(--branco) rounded-full border border-(--verdeSec) px-1 py-1 lg:px-2 lg:py-2 hover:text-(--preto) hover:border-(--preto)"
+        >
+          Criar Categoria
+        </button>
       </div>
     </div>
   );
