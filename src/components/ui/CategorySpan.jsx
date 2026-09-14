@@ -104,21 +104,15 @@ export function SelectCategory({ onChange }) {
 export function SelectCategoryCreate({ index, valorAtual, todasSelecionadas, onRemove, onSelect }) {
   const [open, setOpen] = useState(false);
 
-  function getCategoriasUnicas() {
-    let allCategories = [];
-    produtosTeste.forEach((prod) => {
-      allCategories.push(...prod.categProduto);
-    });
-    return Array.from(new Set(allCategories));
-  }
-
-  const allCategories = getCategoriasUnicas();
+  const categorias = ["Categorias", ...getCategoriasUnicas()];
 
   // Remove as que já estão no array do pai, EXCETO a que está selecionada neste exato campo
-  const categoriasDisponiveis = allCategories.filter((categ) => !todasSelecionadas.includes(categ) || categ === valorAtual)
+  const categoriasDisponiveis = categorias.filter(
+    (categ) => !todasSelecionadas.includes(categ) || categ === valorAtual
+  );
 
   // Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
-  const maiorPalavra = [...allCategories, "Categoria"].reduce(
+  const maiorPalavra = [...categorias, "Categoria"].reduce(
     (a, b) => (a.length > b.length ? a : b),
     ""
   );
