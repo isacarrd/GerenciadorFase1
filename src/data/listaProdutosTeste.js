@@ -24,7 +24,7 @@ export const produtosTeste = [
     imgProduto:
       "https://stories.cnnbrasil.com.br/wp-content/uploads/sites/9/2026/03/nova-camisa-oficial-selecao-2026-vinijr.jpg",
     categProduto: ["Roupa", "Esporte"],
-    quantProduto: 0,
+    quantProduto: 20,
   },
   {
     id: 4,
