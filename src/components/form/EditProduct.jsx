@@ -5,9 +5,10 @@ import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
 
 import CategoryCamp from "./CategoryCamp";
+import { BtnDelete } from "../ui/btnDelete";
 
 export default function EditProduct({ id, isOpen, onClose }) {
-  const [prodImgNova, setProdImgNova] = useState("")
+  const [prodImgNova, setProdImgNova] = useState("");
   const [prodNomeNova, setProdNomeNova] = useState("");
   const [prodDescNova, setProdDescNova] = useState("");
   const [prodCategNova, setProdCategNova] = useState([]); // Será retornado um array, exemplo ['CPU', 'Computadores', 'Hardware'] onde uso o select
@@ -20,30 +21,30 @@ export default function EditProduct({ id, isOpen, onClose }) {
 
   const handleValidarCampos = () => {
     validarCampos(prodNomeNova, prodDescNova, prodCategNova, prodQuantNova);
-    setProdImgNova("")
-    setProdNomeNova("")
-    setProdDescNova("")
-    setProdCategNova([])
-    setProdQuantNova("")
-  }
+    setProdImgNova("");
+    setProdNomeNova("");
+    setProdDescNova("");
+    setProdCategNova([]);
+    setProdQuantNova("");
+  };
 
   // função de acessibilidade
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
     };
-    
+
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
     }
-    
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-  
+
   return (
     <div className="w-screen h-dvh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
       <div
@@ -176,26 +177,29 @@ export default function EditProduct({ id, isOpen, onClose }) {
         {/* Botões: Cancelar | Criar */}
         <div
           id="alteracoes"
-          className="w-full font-inter font-medium text-xs lg:text-base flex flex-row justify-end gap-3 lg:gap-4"
+          className="w-full font-inter font-medium text-xs lg:text-base flex justify-between items-center"
         >
-          <button
-            type="button"
-            id="btnCancel"
-            className="cursor-pointer border-2 border-(--error) rounded-[5px] p-3 text-(--error) hover:bg-(--error) hover:text-(--branco)"
-            onClick={onClose}
-            aria-label="Botão de fechar Modal"
-          >
-            Cancelar
-          </button>
-          <button
-            type="button"
-            id="btnCreate"
-            className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
-            onClick={handleValidarCampos}
-            aria-label="Botão de criar Produto"
-          >
-            Criar
-          </button>
+          <BtnDelete />
+          <div className=" flex justify-end gap-3 lg:gap-4 items-center">
+            <button
+              id="btnCancelEdit"
+              type="button"
+              className="cursor-pointer border-2 border-(--error) rounded-[5px] p-3 text-(--error) hover:bg-(--error) hover:text-(--branco)"
+              onClick={onClose}
+              aria-label="Botão de fechar Modal"
+            >
+              Cancelar
+            </button>
+            <button
+              id="btnEdit"
+              type="button"
+              className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
+              onClick={handleValidarCampos}
+              aria-label="Botão de criar Produto"
+            >
+              Criar
+            </button>
+          </div>
         </div>
       </div>
     </div>

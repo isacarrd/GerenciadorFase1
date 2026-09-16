@@ -1,9 +1,10 @@
+import { useState } from "react";
 import editAllowed from "../../assets/edit.svg";
 import noEditAllowed from "../../assets/noEditAllowed.svg";
 import noImg from "../../assets/noImg.svg";
+import { BtnDelete } from "../ui/btnDelete";
 import { CategoryProduct } from "../ui/CategorySpan";
 import EditProduct from "./EditProduct";
-import { useState } from "react";
 
 export default function ProductCard({
   prodId,
@@ -13,7 +14,6 @@ export default function ProductCard({
   prodCateg,
   prodQuant,
 }) {
-
   const handleClose = () => {
     setModalEditarAtivo(null);
   };
@@ -63,9 +63,12 @@ export default function ProductCard({
               ))}
             </div>
           </div>
-          <span className="font-inter text-(--preto) font-bold text-[10px] lg:text-base">
-            ESTOQUE: {String(prodQuant).padStart(2, "0")}
-          </span>
+          <div className="flex flex-row items-center justify-between">
+            <span className="font-inter text-(--preto) font-bold text-[10px] lg:text-base">
+              ESTOQUE: {String(prodQuant).padStart(2, "0")}
+            </span>
+            <BtnDelete />
+          </div>
         </div>
         {/* Passa a props pro filho */}
         {modalEditar && (
@@ -118,9 +121,12 @@ export default function ProductCard({
               ))}
             </div>
           </div>
-          <span className="font-inter text-(--noEstoque) font-bold text-[10px] lg:text-base">
-            ESTOQUE: {String(prodQuant).padStart(2, "0")}
-          </span>
+          <div className="flex flex-row items-center justify-between">
+            <span className="font-inter text-(--noEstoque) font-bold text-[10px] lg:text-base">
+              ESTOQUE: {String(prodQuant).padStart(2, "0")}
+            </span>
+            <BtnDelete />
+          </div>
         </div>
       </div>
     );

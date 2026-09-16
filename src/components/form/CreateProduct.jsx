@@ -3,6 +3,7 @@ import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
+import { BtnDelete } from "../ui/btnDelete";
 
 import CategoryCamp from "./CategoryCamp";
 
@@ -179,26 +180,29 @@ export default function CreateProduct({ isOpen, onClose }) {
         {/* Botões: Cancelar | Criar */}
         <div
           id="alteracoes"
-          className="w-full font-inter font-medium text-xs lg:text-base flex flex-row justify-end gap-3 lg:gap-4"
+          className="w-full font-inter font-medium text-xs justify-between lg:text-base flex flex-row items-center"
         >
-          <button
-            type="button"
-            id="btnCancel"
-            className="cursor-pointer border-2 border-(--error) rounded-[5px] p-3 text-(--error) hover:bg-(--error) hover:text-(--branco)"
-            onClick={onClose}
-            aria-label="Botão de fechar Modal"
-          >
-            Cancelar
-          </button>
-          <button
-            type="button"
-            id="btnCreate"
-            className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
-            onClick={handleValidarCampos}
-            aria-label="Botão de criar Produto"
-          >
-            Criar
-          </button>
+          <BtnDelete />
+          <div className="flex justify-end gap-3 lg:gap-4">
+            <button
+              id="btnCancelCreate"
+              type="button"
+              className="cursor-pointer border-2 border-(--error) rounded-[5px] p-3 text-(--error) hover:bg-(--error) hover:text-(--branco)"
+              onClick={onClose}
+              aria-label="Botão de fechar Modal"
+            >
+              Cancelar
+            </button>
+            <button
+              id="btnCreate"
+              type="button"
+              className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
+              onClick={handleValidarCampos}
+              aria-label="Botão de criar Produto"
+            >
+              Criar
+            </button>
+          </div>
         </div>
       </div>
     </div>
