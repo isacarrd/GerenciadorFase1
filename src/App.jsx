@@ -4,6 +4,8 @@ import ProductSection from "./components/screen/ProductSection";
 import SearchSection from "./components/screen/SearchSection";
 import CreateCategory from "./components/form/CreateCategory";
 
+// Teste
+
 export default function App() {
   return (
     <div className="h-lvh bg-(--bgColor)">
