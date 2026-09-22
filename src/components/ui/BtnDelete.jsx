@@ -1,4 +1,5 @@
 import deleteIco from "../../assets/delete.svg";
+import removeIco from "../../assets/remove.svg";
 
 // Btn dos Cards
 export function BtnDelete({}) {
@@ -17,6 +18,21 @@ export function BtnDeleteManage({}) {
         src={deleteIco}
         alt="Deletar"
         className="w-3.5 h-3.5 lg:w-4.5 lg:h-4.5"
+      />
+    </button>
+  );
+}
+
+export function ClearCamp(props) {
+  return (
+    <button
+      onClick={props.aoClicar}
+      className="shrink-0 cursor-pointer hover:bg-(--searchBarEffect) bg-(--searchBar) w-fit h-fit rounded-3xl lg:p-2 p-1"
+    >
+      <img
+        src={removeIco}
+        alt="Limpar Campo"
+        className="lg:w-6 lg:h-6 w-4 h-4"
       />
     </button>
   );
