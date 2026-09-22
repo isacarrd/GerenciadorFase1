@@ -1,15 +1,25 @@
 import searchLupa from "../../assets/search.svg";
+import { useState } from "react";
 import { barraPesquisa } from "../../data/barraPesquisa";
+import { ClearCamp } from "../ui/BtnDelete"
 
 export default function SearchSection() {
+  const [texto, setTexto] = useState()
+
+  const limpaTexto = () => {
+    setTexto('')
+    barraPesquisa('')
+  }
+
   return (
     <section className="flex justify-center flex-row px-6 lg:px-25">
       <div
         className="
           w-full
           flex flex-row items-center
-          rounded-[100px]
+          justify-between
           gap-3
+          rounded-[100px]
           bg-(--searchBar)
           border-2 border-(--searchBarEffect)
           inset-shadow-[0_0_10px_var(--searchBarEffect)]
@@ -17,28 +27,33 @@ export default function SearchSection() {
           px-6 py-4.5
           lg:px-12 lg:py-5 lg:gap-5"
       >
-        <img
-          src={searchLupa}
-          alt="Elemento de decoração"
-          className="w-5 lg:w-12"
-        />
-        <input
-          aria-label="Barra de pesquisa"
-          type="text"
-          name="searchBar"
-          id="searchBar"
-          // placeholder="placeholder de teste"
-          onChange={(e) => barraPesquisa(e.target.value.toLowerCase())}
-          className="
-            w-full
-            font-inter
-            text-sm lg:text-xl
-            bg-transparent
-            focus:outline-none
-            text-(--branco)
-            placeholder:font-inter
-            placeholder:text-(--bgColor)"
-        />
+          <img
+            src={searchLupa}
+            alt="Elemento de decoração"
+            className="w-5 lg:w-12"
+          />
+          <input
+            aria-label="Barra de pesquisa"
+            type="text"
+            name="searchBar"
+            id="searchBar"
+            value={texto}
+            // placeholder="placeholder de teste"
+            onChange={(e) => {
+              setTexto(e.target.value.toLowerCase());
+              barraPesquisa(e.target.value.toLowerCase());
+            }}
+            className="
+              w-full
+              font-inter
+              text-sm lg:text-xl
+              bg-transparent
+              focus:outline-none
+              text-(--branco)
+              placeholder:font-inter
+              placeholder:text-(--bgColor)"
+          />
+        {texto && <ClearCamp aoClicar={limpaTexto} />}
       </div>
     </section>
   );
