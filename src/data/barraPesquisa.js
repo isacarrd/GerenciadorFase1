@@ -2,12 +2,15 @@ import { produtosTeste } from "./listaProdutosTeste";
 
 export function barraPesquisa(campo) {
   const productsDiv = document.getElementById("products");
-
+  
   // Evita div vazia/não encontrada
   if (!productsDiv) return;
-
+  
   // Pega APENAS os ids que começam com 'product-'
   const cards = productsDiv.querySelectorAll("[id^='product-']");
+  
+  // Procura a mensagem existente
+  const mensagemAnterior = document.getElementById("mensagemPesquisa");
 
   // Se a pesquisa estiver vazia, mostra todos novamente e também serve para tirar os espaços em branco no campo
   if (campo.trim() === "") {
@@ -22,6 +25,7 @@ export function barraPesquisa(campo) {
     return;
   }
 
+  // Aonde acontece a pesquisa em si!
   const produtosFiltrados = produtosTeste.filter((prod) => {
     const prodId = prod.id.toString() === campo;
     const prodNome = prod.nomeProduto.toLowerCase().includes(campo);
@@ -43,12 +47,12 @@ export function barraPesquisa(campo) {
     }
   });
 
-  // Remove mensagem anterior antes de uma pesquisa
-  const mensagemAnterior = document.getElementById("mensagemPesquisa");
+  // Remove a mensagem anterior
   if (mensagemAnterior) {
     mensagemAnterior.remove();
   }
 
+  // Se não encontrou nada...
   if (produtosFiltrados.length === 0) {
     const mensagem = document.createElement("p");
     mensagem.id = "mensagemPesquisa";
