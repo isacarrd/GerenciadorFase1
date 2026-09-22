@@ -2,7 +2,7 @@ import deleteIco from "../../assets/delete.svg";
 import removeIco from "../../assets/remove.svg";
 
 // Btn dos Cards
-export function BtnDelete({}) {
+export function BtnDelete() {
   return (
     <button className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-(--cinza)">
       <img src={deleteIco} alt="Deletar" className="w-4 h-4 lg:w-8 lg:h-8" />
@@ -11,7 +11,7 @@ export function BtnDelete({}) {
 }
 
 // Só muda a estilização -> Btn do gerenciador de categorias
-export function BtnDeleteManage({}) {
+export function BtnDeleteManage() {
   return (
     <button className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-(--cinza)">
       <img

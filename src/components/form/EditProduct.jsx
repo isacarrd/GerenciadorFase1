@@ -4,8 +4,8 @@ import uploadIcon from "../../assets/upload.svg";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
 
+import { BtnDelete } from "../ui/BotaoDeletar";
 import CategoryCamp from "./CategoryCamp";
-import { BtnDelete } from "../ui/btnDelete";
 
 export default function EditProduct({ id, isOpen, onClose }) {
   const [prodImgNova, setProdImgNova] = useState("");

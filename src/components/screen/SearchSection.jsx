@@ -1,15 +1,15 @@
-import searchLupa from "../../assets/search.svg";
 import { useState } from "react";
+import searchLupa from "../../assets/search.svg";
 import { barraPesquisa } from "../../data/barraPesquisa";
-import { ClearCamp } from "../ui/BtnDelete"
+import { ClearCamp } from "../ui/BotaoDeletar";
 
 export default function SearchSection() {
-  const [texto, setTexto] = useState()
+  const [texto, setTexto] = useState();
 
   const limpaTexto = () => {
-    setTexto('')
-    barraPesquisa('')
-  }
+    setTexto("");
+    barraPesquisa("");
+  };
 
   return (
     <section className="flex justify-center flex-row px-6 lg:px-25">
@@ -27,23 +27,23 @@ export default function SearchSection() {
           px-6 py-4.5
           lg:px-12 lg:py-5 lg:gap-5"
       >
-          <img
-            src={searchLupa}
-            alt="Elemento de decoração"
-            className="w-5 lg:w-12"
-          />
-          <input
-            aria-label="Barra de pesquisa"
-            type="text"
-            name="searchBar"
-            id="searchBar"
-            value={texto}
-            // placeholder="placeholder de teste"
-            onChange={(e) => {
-              setTexto(e.target.value.toLowerCase());
-              barraPesquisa(e.target.value.toLowerCase());
-            }}
-            className="
+        <img
+          src={searchLupa}
+          alt="Elemento de decoração"
+          className="w-5 lg:w-12"
+        />
+        <input
+          aria-label="Barra de pesquisa"
+          type="text"
+          name="searchBar"
+          id="searchBar"
+          value={texto}
+          // placeholder="placeholder de teste"
+          onChange={(e) => {
+            setTexto(e.target.value.toLowerCase());
+            barraPesquisa(e.target.value.toLowerCase());
+          }}
+          className="
               w-full
               font-inter
               text-sm lg:text-xl
@@ -52,7 +52,7 @@ export default function SearchSection() {
               text-(--branco)
               placeholder:font-inter
               placeholder:text-(--bgColor)"
-          />
+        />
         {texto && <ClearCamp aoClicar={limpaTexto} />}
       </div>
     </section>

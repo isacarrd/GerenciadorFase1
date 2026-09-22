@@ -2,7 +2,7 @@ import { useState } from "react";
 import editAllowed from "../../assets/edit.svg";
 import noEditAllowed from "../../assets/noEditAllowed.svg";
 import noImg from "../../assets/noImg.svg";
-import { BtnDelete } from "../ui/btnDelete";
+import { BtnDelete } from "../ui/BotaoDeletar";
 import { CategoryProduct } from "../ui/CategorySpan";
 import EditProduct from "./EditProduct";
 

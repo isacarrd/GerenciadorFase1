@@ -3,7 +3,6 @@ import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
-import { BtnDelete } from "../ui/btnDelete";
 
 import CategoryCamp from "./CategoryCamp";
 
