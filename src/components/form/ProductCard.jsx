@@ -7,6 +7,8 @@ import { CategoryProduct } from "../ui/CategorySpan";
 import EditProduct from "./EditProduct";
 
 export default function ProductCard({
+  produtos,
+  setProdutos,
   prodId,
   prodImg = "",
   prodNome,
@@ -67,12 +69,18 @@ export default function ProductCard({
             <span className="font-inter text-(--preto) font-bold text-[10px] lg:text-base">
               ESTOQUE: {String(prodQuant).padStart(2, "0")}
             </span>
-            <BtnDelete />
+            <BtnDelete
+              onDelete={() =>
+                setProdutos((prev) => prev.filter((p) => p.id !== prodId))
+              }
+            />
           </div>
         </div>
         {/* Passa a props pro filho */}
         {modalEditar && (
           <EditProduct
+            produtos={produtos}
+            setProdutos={setProdutos}
             isOpen={modalEditar}
             onClose={handleClose}
             key={prodId}
@@ -125,7 +133,11 @@ export default function ProductCard({
             <span className="font-inter text-(--noEstoque) font-bold text-[10px] lg:text-base">
               ESTOQUE: {String(prodQuant).padStart(2, "0")}
             </span>
-            <BtnDelete />
+            <BtnDelete
+              onDelete={() =>
+                setProdutos((prev) => prev.filter((p) => p.id !== prodId))
+              }
+            />
           </div>
         </div>
       </div>
