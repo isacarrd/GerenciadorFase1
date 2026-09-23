@@ -26,6 +26,25 @@ export default function EditProduct({
   const descCounter = useCharCounter(prodDescNova, setProdDescNova, 200);
   const categCounter = useCharCounter(prodCategNova, setProdCategNova, 5);
 
+  // Popula os campos com os dados atuais do produto quando o modal abre
+  useEffect(() => {
+    const produtoAtual = produtos.find((p) => p.id === id);
+    if (produtoAtual) {
+      setProdNomeNova(produtoAtual.nomeProduto);
+      setProdDescNova(produtoAtual.descProduto);
+      setProdCategNova(produtoAtual.categProduto);
+      setProdQuantNova(String(produtoAtual.quantProduto));
+      setProdImgNova(produtoAtual.imgProduto); // popula a prévia com a imagem já existente
+    }
+  }, [id]); // roda quando o modal abre para esse id específico
+
+  const handleImagemSelecionada = async (e) => {
+    const arquivo = e.target.files[0];
+    if (!arquivo) return;
+    const dataUrl = await readImage(arquivo);
+    setProdImgNova(dataUrl);
+  };
+
   const handleSalvar = async () => {
     const valido = validarCampos(
       prodNomeNova,
@@ -40,7 +59,7 @@ export default function EditProduct({
     if (prodDescNova.trim() !== "") alteracoes.descProduto = prodDescNova;
     if (prodCategNova.length > 0) alteracoes.categProduto = prodCategNova;
     if (prodQuantNova !== "") alteracoes.quantProduto = Number(prodQuantNova);
-    if (prodImgNova) alteracoes.imgProduto = await readImage(prodImgNova);
+    alteracoes.imgProduto = prodImgNova; // sempre atualiza (seja a antiga ou a nova selecionada)
 
     setProdutos((prev) =>
       prev.map((p) => (p.id === id ? { ...p, ...alteracoes } : p))
@@ -48,17 +67,6 @@ export default function EditProduct({
 
     onClose();
   };
-
-  // Popula os campos com os dados atuais do produto quando o modal abre
-  useEffect(() => {
-    const produtoAtual = produtos.find((p) => p.id === id);
-    if (produtoAtual) {
-      setProdNomeNova(produtoAtual.nomeProduto);
-      setProdDescNova(produtoAtual.descProduto);
-      setProdCategNova(produtoAtual.categProduto);
-      setProdQuantNova(String(produtoAtual.quantProduto));
-    }
-  }, [id]); // roda quando o modal abre para esse id específico
 
   if (!isOpen) return null;
 
@@ -86,16 +94,24 @@ export default function EditProduct({
               htmlFor="imgProduto"
               className=" w-full h-50 lg:h-90 bg-(--verdePrim) flex items-center justify-center cursor-pointer"
             >
-              <img
-                src={uploadIcon}
-                alt="Upload Imagem"
-                className="w-6 h-6 lg:w-12 lg:h-12"
-              />
+              {prodImgNova ? (
+                <img
+                  src={prodImgNova}
+                  alt="Prévia da imagem"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={uploadIcon}
+                  alt="Upload Imagem"
+                  className="w-6 h-6 lg:w-12 lg:h-12"
+                />
+              )}
             </label>
             <input
               id="imgProduto"
               type="file"
-              onChange={(e) => setProdImgNova(e.target.files[0] || null)}
+              onChange={handleImagemSelecionada}
               accept="image/*"
               className="hidden"
             />
