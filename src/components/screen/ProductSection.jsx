@@ -4,10 +4,9 @@ import { SelectCategory, CategorySpanMain } from "../ui/CategorySpan";
 import ProductCard from "../form/ProductCard";
 import CreateProduct from "../form/CreateProduct";
 import CreateCategory from "../form/CreateCategory";
-import { produtosTeste } from "../../data/listaProdutosTeste";
 import { selectPesquisa } from "../../data/selectPesquisa"; 
 
-export default function ProductSection() {
+export default function ProductSection({ produtos, setProdutos }) {
   const [modalCriar, setModalCriarAtivo] = useState(null);
   const [modalCriarCateg, setModalCriarCategAtivo] = useState(null);
   const [categSelected, setCategSelected] = useState("Categorias")
@@ -60,8 +59,10 @@ export default function ProductSection() {
         id="products"
         className="w-full h-fit flex flex-col flex-wrap items-center justify-center gap-4 md:flex-row lg:gap-y-10.5"
       >
-        {produtosTeste.map((prod) => (
+        {produtos.map((prod) => (
           <ProductCard
+            produtos={produtos}
+            setProdutos={setProdutos}
             key={prod.id}
             prodId={prod.id}
             prodImg={prod.imgProduto}
@@ -71,7 +72,7 @@ export default function ProductSection() {
             prodQuant={prod.quantProduto}
           />
         ))}
-        {modalCriar && <CreateProduct isOpen={true} onClose={handleClose} />}
+        {modalCriar && <CreateProduct isOpen={true} onClose={handleClose} produtos={produtos} setProdutos={setProdutos} />}
         {modalCriarCateg && <CreateCategory isOpen={true} onClose={handleCloseCateg} />}
       </div>
     </section>
