@@ -3,11 +3,12 @@ import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
+import { readImage } from "../../data/readImage";
 
 import CategoryCamp from "./CategoryCamp";
 
-export default function CreateProduct({ isOpen, onClose }) {
-  const [prodImg, setProdImg] = useState("")
+export default function CreateProduct({ isOpen, onClose, produtos, setProdutos }) {
+  const [prodImgArquivo, setProdImgArquivo] = useState(null);
   const [prodNome, setProdNome] = useState("");
   const [prodDesc, setProdDesc] = useState("");
   const [prodCateg, setProdCateg] = useState([]); // Será retornado um array, exemplo ['CPU', 'Computadores', 'Hardware'] onde uso o select
@@ -18,14 +19,30 @@ export default function CreateProduct({ isOpen, onClose }) {
   const descCounter = useCharCounter(prodDesc, setProdDesc, 200);
   const categCounter = useCharCounter(prodCateg, setProdCateg, 5);
 
-  const handleValidarCampos = () => {
-    validarCampos(prodNome, prodDesc, prodCateg, prodQuant);
-    setProdImg("");
+  const gerarProximoId = () => produtos.length === 0 ? 1 : Math.max(...produtos.map(prod => prod.id)) + 1;
+
+  const handleCriar = async () => {
+    const valido = validarCampos(prodNome, prodDesc, prodCateg, prodQuant);
+    if (!valido) return // mostra o alert
+    
+    const newProduct = {
+      id: gerarProximoId(),
+      nomeProduto: prodNome,
+      descProduto: prodDesc,
+      categProduto: prodCateg,
+      quantProduto: Number(prodQuant),
+      imgProduto: prodImgArquivo ? await readImage(prodImgArquivo) : "",
+    };
+
+    setProdutos(prev => [...prev, newProduct]);
+    setProdImgArquivo("");
     setProdNome("");
     setProdDesc("");
     setProdCateg([]);
     setProdQuant("");
-  };
+    onClose();
+  }
+
 
   // função de acessibilidade
   useEffect(() => {
@@ -80,8 +97,7 @@ export default function CreateProduct({ isOpen, onClose }) {
             <input
               id="imgProduto"
               type="file"
-              value={prodImg}
-              onChange={setProdImg}
+              onChange={(e) => setProdImgArquivo(e.target.files[0] || null)}
               accept="image/*"
               className="hidden"
             />
@@ -194,7 +210,7 @@ export default function CreateProduct({ isOpen, onClose }) {
             id="btnCreate"
             type="button"
             className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
-            onClick={handleValidarCampos}
+            onClick={handleCriar}
             aria-label="Botão de criar Produto"
           >
             Criar
