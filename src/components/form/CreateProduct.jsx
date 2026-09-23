@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
+import { readImage } from "../../data/readImage";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
-import { readImage } from "../../data/readImage";
 
 import CategoryCamp from "./CategoryCamp";
 
-export default function CreateProduct({ isOpen, onClose, produtos, setProdutos }) {
+export default function CreateProduct({
+  isOpen,
+  onClose,
+  produtos,
+  setProdutos,
+}) {
   const [prodImgArquivo, setProdImgArquivo] = useState(null);
   const [prodNome, setProdNome] = useState("");
   const [prodDesc, setProdDesc] = useState("");
@@ -19,51 +24,61 @@ export default function CreateProduct({ isOpen, onClose, produtos, setProdutos }
   const descCounter = useCharCounter(prodDesc, setProdDesc, 200);
   const categCounter = useCharCounter(prodCateg, setProdCateg, 5);
 
-  const gerarProximoId = () => produtos.length === 0 ? 1 : Math.max(...produtos.map(prod => prod.id)) + 1;
+  const gerarProximoId = () =>
+    produtos.length === 0
+      ? 1
+      : Math.max(...produtos.map((prod) => prod.id)) + 1;
+
+  // Para não renderizar a imagem duas vezes
+  const handleImagemSelecionada = async (e) => {
+    const arquivo = e.target.files[0];
+    if (!arquivo) return;
+    const dataUrl = await readImage(arquivo);
+    setProdImgArquivo(dataUrl);
+  };
 
   const handleCriar = async () => {
     const valido = validarCampos(prodNome, prodDesc, prodCateg, prodQuant);
-    if (!valido) return // mostra o alert
-    
+    if (!valido) return; // mostra o alert
+
     const newProduct = {
       id: gerarProximoId(),
       nomeProduto: prodNome,
       descProduto: prodDesc,
       categProduto: prodCateg,
       quantProduto: Number(prodQuant),
-      imgProduto: prodImgArquivo ? await readImage(prodImgArquivo) : "",
+      imgProduto: prodImgArquivo,
     };
 
-    setProdutos(prev => [...prev, newProduct]);
+    setProdutos((prev) => [...prev, newProduct]);
     setProdImgArquivo("");
     setProdNome("");
     setProdDesc("");
     setProdCateg([]);
     setProdQuant("");
     onClose();
-  }
-
+  };
 
   // função de acessibilidade
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
-      
     };
-    
+
     // só add o listener se o modal estiver aberto
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
     }
-    
+
     // remove o listener quando o modal fechar ou desmontar
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
-  
-  if (!isOpen) return null; 
 
+  if (!isOpen) return null;
+
+  console.log(prodCateg);
   return (
     <div className="w-screen h-dvh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
       <div
@@ -88,16 +103,24 @@ export default function CreateProduct({ isOpen, onClose, produtos, setProdutos }
               htmlFor="imgProduto"
               className=" w-full h-50 lg:h-90 bg-(--verdePrim) flex items-center justify-center cursor-pointer"
             >
-              <img
-                src={uploadIcon}
-                alt="Upload Imagem"
-                className="w-6 h-6 lg:w-12 lg:h-12"
-              />
+              {prodImgArquivo ? (
+                <img
+                  src={prodImgArquivo}
+                  alt="Prévia da imagem selecionada"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={uploadIcon}
+                  alt="Upload Imagem"
+                  className="w-6 h-6 lg:w-12 lg:h-12"
+                />
+              )}
             </label>
             <input
               id="imgProduto"
               type="file"
-              onChange={(e) => setProdImgArquivo(e.target.files[0] || null)}
+              onChange={handleImagemSelecionada}
               accept="image/*"
               className="hidden"
             />
