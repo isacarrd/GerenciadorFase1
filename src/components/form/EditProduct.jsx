@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import required from "../../assets/required.svg";
 import uploadIcon from "../../assets/upload.svg";
+import { readImage } from "../../data/readImage";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
 
 import { BtnDelete } from "../ui/BotaoDeletar";
 import CategoryCamp from "./CategoryCamp";
 
-export default function EditProduct({ id, isOpen, onClose }) {
-  const [prodImgNova, setProdImgNova] = useState("");
+export default function EditProduct({
+  id,
+  isOpen,
+  onClose,
+  produtos,
+  setProdutos,
+}) {
+  const [prodImgNova, setProdImgNova] = useState(null);
   const [prodNomeNova, setProdNomeNova] = useState("");
   const [prodDescNova, setProdDescNova] = useState("");
   const [prodCategNova, setProdCategNova] = useState([]); // Será retornado um array, exemplo ['CPU', 'Computadores', 'Hardware'] onde uso o select
@@ -19,29 +26,39 @@ export default function EditProduct({ id, isOpen, onClose }) {
   const descCounter = useCharCounter(prodDescNova, setProdDescNova, 200);
   const categCounter = useCharCounter(prodCategNova, setProdCategNova, 5);
 
-  const handleValidarCampos = () => {
-    validarCampos(prodNomeNova, prodDescNova, prodCategNova, prodQuantNova);
-    setProdImgNova("");
-    setProdNomeNova("");
-    setProdDescNova("");
-    setProdCategNova([]);
-    setProdQuantNova("");
+  const handleSalvar = async () => {
+    const valido = validarCampos(
+      prodNomeNova,
+      prodDescNova,
+      prodCategNova,
+      prodQuantNova
+    );
+    if (!valido) return;
+
+    const alteracoes = {};
+    if (prodNomeNova.trim() !== "") alteracoes.nomeProduto = prodNomeNova;
+    if (prodDescNova.trim() !== "") alteracoes.descProduto = prodDescNova;
+    if (prodCategNova.length > 0) alteracoes.categProduto = prodCategNova;
+    if (prodQuantNova !== "") alteracoes.quantProduto = Number(prodQuantNova);
+    if (prodImgNova) alteracoes.imgProduto = await readImage(prodImgNova);
+
+    setProdutos((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...alteracoes } : p))
+    );
+
+    onClose();
   };
 
-  // função de acessibilidade
+  // Popula os campos com os dados atuais do produto quando o modal abre
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
+    const produtoAtual = produtos.find((p) => p.id === id);
+    if (produtoAtual) {
+      setProdNomeNova(produtoAtual.nomeProduto);
+      setProdDescNova(produtoAtual.descProduto);
+      setProdCategNova(produtoAtual.categProduto);
+      setProdQuantNova(String(produtoAtual.quantProduto));
     }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  }, [id]); // roda quando o modal abre para esse id específico
 
   if (!isOpen) return null;
 
@@ -78,8 +95,7 @@ export default function EditProduct({ id, isOpen, onClose }) {
             <input
               id="imgProduto"
               type="file"
-              value={prodImgNova}
-              onChange={setProdImgNova}
+              onChange={(e) => setProdImgNova(e.target.files[0] || null)}
               accept="image/*"
               className="hidden"
             />
@@ -179,7 +195,11 @@ export default function EditProduct({ id, isOpen, onClose }) {
           id="alteracoes"
           className="w-full font-inter font-medium text-xs lg:text-base flex justify-between items-center"
         >
-          <BtnDelete />
+          <BtnDelete
+            onDelete={() =>
+              setProdutos((prev) => prev.filter((p) => p.id !== id))
+            }
+          />
           <div className=" flex justify-end gap-3 lg:gap-4 items-center">
             <button
               id="btnCancelEdit"
@@ -194,10 +214,10 @@ export default function EditProduct({ id, isOpen, onClose }) {
               id="btnEdit"
               type="button"
               className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
-              onClick={handleValidarCampos}
-              aria-label="Botão de criar Produto"
+              onClick={handleSalvar}
+              aria-label="Botão de salvar Alteração de Produto"
             >
-              Criar
+              Salvar
             </button>
           </div>
         </div>
