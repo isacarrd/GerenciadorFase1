@@ -187,7 +187,7 @@ export default function EditProduct({
             >
               Estoque:
             </label>
-            <div className="w-fit flex flex-row gap-0.5">
+            <div className="flex flex-row gap-0.5">
               <input
                 type="number"
                 id="quantProduto"
@@ -196,7 +196,7 @@ export default function EditProduct({
                 required
                 onChange={(e) => setProdQuantNova(e.target.value)}
                 placeholder="00"
-                className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-min-[50px] lg:w-min-[57px] font-inter text-sm lg:text-xl px-2 py-2 lg:px-4 lg:py-4 bg-(--cinza) text-(--preto) rounded-lg lg:rounded-2xl placeholder:font-inter placeholder:text-(--preto) placeholder:text-sm lg:placeholder:text-xl focus:outline-none"
+                className="w-14 lg:w-20 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none font-inter text-sm lg:text-xl px-2 py-2 lg:px-4 lg:py-4 bg-(--cinza) text-(--preto) rounded-lg lg:rounded-2xl placeholder:font-inter placeholder:text-(--preto) placeholder:text-sm lg:placeholder:text-xl focus:outline-none"
               />
               <img
                 src={required}
