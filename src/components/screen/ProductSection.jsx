@@ -59,21 +59,36 @@ export default function ProductSection({ produtos, setProdutos }) {
         id="products"
         className="w-full h-fit flex flex-col flex-wrap items-center justify-center gap-4 md:flex-row lg:gap-y-10.5"
       >
-        {produtos.map((prod) => (
-          <ProductCard
+        {produtos.length > 0 ? (
+          produtos.map((prod) => (
+            <ProductCard
+              produtos={produtos}
+              setProdutos={setProdutos}
+              key={prod.id}
+              prodId={prod.id}
+              prodImg={prod.imgProduto}
+              prodNome={prod.nomeProduto}
+              prodCateg={prod.categProduto}
+              prodDesc={prod.descProduto}
+              prodQuant={prod.quantProduto}
+            />
+          ))
+        ) : (
+          <p className="py-5 font-inter text-(--preto) text-sm lg:text-xl text-center w-full">
+            Nenhum produto aqui, crie um ao clicar em '+'!
+          </p>
+        )}
+        {modalCriar && (
+          <CreateProduct
+            isOpen={true}
+            onClose={handleClose}
             produtos={produtos}
             setProdutos={setProdutos}
-            key={prod.id}
-            prodId={prod.id}
-            prodImg={prod.imgProduto}
-            prodNome={prod.nomeProduto}
-            prodCateg={prod.categProduto}
-            prodDesc={prod.descProduto}
-            prodQuant={prod.quantProduto}
           />
-        ))}
-        {modalCriar && <CreateProduct isOpen={true} onClose={handleClose} produtos={produtos} setProdutos={setProdutos} />}
-        {modalCriarCateg && <CreateCategory isOpen={true} onClose={handleCloseCateg} />}
+        )}
+        {modalCriarCateg && (
+          <CreateCategory isOpen={true} onClose={handleCloseCateg} />
+        )}
       </div>
     </section>
   );
