@@ -11,9 +11,9 @@ export function BtnDelete({ onDelete }) {
 }
 
 // Só muda a estilização -> Btn do gerenciador de categorias
-export function BtnDeleteManage() {
+export function BtnDeleteManage({ onRemoveCateg }) {
   return (
-    <button className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-(--cinza)">
+    <button onClick={onRemoveCateg} className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-[#e2b5b3]">
       <img
         src={deleteIco}
         alt="Deletar"
