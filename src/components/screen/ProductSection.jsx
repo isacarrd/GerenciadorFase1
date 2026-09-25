@@ -1,23 +1,29 @@
 import { useState } from "react";
 import createElementIco from "../../assets/create.svg";
-import { SelectCategory, CategorySpanMain } from "../ui/CategorySpan";
-import ProductCard from "../form/ProductCard";
-import CreateProduct from "../form/CreateProduct";
+import { selectPesquisa } from "../../data/selectPesquisa";
 import CreateCategory from "../form/CreateCategory";
-import { selectPesquisa } from "../../data/selectPesquisa"; 
+import CreateProduct from "../form/CreateProduct";
+import ManageCategory from "../form/ManageCategory";
+import ProductCard from "../form/ProductCard";
+import { SelectCategory } from "../ui/CategorySpan";
 
 export default function ProductSection({ produtos, setProdutos }) {
   const [modalCriar, setModalCriarAtivo] = useState(null);
   const [modalCriarCateg, setModalCriarCategAtivo] = useState(null);
-  const [categSelected, setCategSelected] = useState("Categorias")
+  const [modalGerenciarCateg, setModalGerenciarCategAtivo] = useState(null);
+  const [categSelected, setCategSelected] = useState("Categorias");
 
-    const handleClose = () => {
-      setModalCriarAtivo(null);
+  const handleClose = () => {
+    setModalCriarAtivo(null);
   };
-    const handleCloseCateg = () => {
-      setModalCriarCategAtivo(null);
+  const handleCloseCateg = () => {
+    setModalCriarCategAtivo(null);
   };
-  
+
+  const handleCloseGarenc = () => {
+    setModalGerenciarCategAtivo(null);
+  };
+
   return (
     <section className="w-full flex flex-col gap-3 lg:gap-10">
       <div className="w-full flex flex-row items-center justify-between">
@@ -27,7 +33,7 @@ export default function ProductSection({ produtos, setProdutos }) {
           </h4>
           <div
             id="categories"
-            className="w-fit flex flex-row flex-wrap gap-3 lg:gap-2"
+            className="w-fit flex flex-row flex-wrap gap-3 lg:gap-2 items-center"
           >
             <SelectCategory
               onChange={(categ) => {
@@ -40,6 +46,12 @@ export default function ProductSection({ produtos, setProdutos }) {
               className="cursor-pointer font-inter font-bold text-[10px] lg:text-sm text-(--verdeSec) bg-(--branco) rounded-full border border-(--verdeSec) px-1 py-1 lg:px-2 lg:py-2 hover:text-(--preto) hover:border-(--preto)"
             >
               Criar Categoria
+            </button>
+            <button
+              onClick={() => setModalGerenciarCategAtivo(true)}
+              className="cursor-pointer font-inter font-medium text-[10px] lg:text-sm border-2 border-(--marrom) bg-(--marrom) rounded-[5px] p-3 text-(--branco) hover:bg-(--branco) hover:text-(--marrom)"
+            >
+              Gerenciar Categorias
             </button>
           </div>
         </div>
@@ -88,6 +100,9 @@ export default function ProductSection({ produtos, setProdutos }) {
         )}
         {modalCriarCateg && (
           <CreateCategory isOpen={true} onClose={handleCloseCateg} />
+        )}
+        {modalGerenciarCateg && (
+          <ManageCategory isOpen={true} onClose={handleCloseGarenc} />
         )}
       </div>
     </section>
