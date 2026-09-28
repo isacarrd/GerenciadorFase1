@@ -5,12 +5,13 @@ import { BtnDeleteManage } from "../ui/BotaoDeletar";
 import CreateCategory from "./CreateCategory";
 
 export default function ManageCategory({ isOpen, onClose }) {
-  const [abrirModalCreateCateg, setAbrirModalCreateCateg] = useState(null)
+  const [select, setSelect] = useState("");
+  const [categorias, setCategorias] = useState(getCategoriasUnicas());
+  const [abrirModalCreateCateg, setAbrirModalCreateCateg] = useState(null);
   const handleCloseModalCreateCateg = () => {
-    setAbrirModalCreateCateg(null)
-  }
+    setAbrirModalCreateCateg(null);
+  };
 
-  const categorias = getCategoriasUnicas();
   // função de acessibilidade
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -28,6 +29,22 @@ export default function ManageCategory({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  // // para testes
+  // useEffect(() => {
+  //   console.log(select);
+  // }, [select]);
+
+  // const acharIndexCateg = (nomeCateg) => {
+  //   const index = categorias.indexOf(nomeCateg)
+  //   return index
+  // }
+
+  const removeCateg = (index) => {
+    setCategorias((categoriasAtuais) => {
+      return categoriasAtuais.filter((_, i) => i !== index);
+    });
+  };
 
   return (
     <div className="w-screen h-dvh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
@@ -48,12 +65,31 @@ export default function ManageCategory({ isOpen, onClose }) {
         <div className="flex flex-col gap-1.75 lg:gap-3.5">
           {/* Categorias */}
           <ul className="flex flex-col gap-2.25 p-3 lg:gap-4.5 bg-(--cinza) rounded-[5px]">
-            {categorias.map((categ) => (
-              <li className="categItem flex flex-row flex-wrap px-0.5 py-0.5 justify-between items-center lg:py-1 font-inter font-medium text-xs lg:text-sm text-(--preto) hover:bg-[#C9C9C9] rounded-[5px]">
-                {categ}
-                <BtnDeleteManage />
-              </li>
-            ))}
+            {categorias.length > 0 ? (
+              categorias.map((categ, index) => {
+                // const indexCateg = acharIndexCateg(categ)
+                return (
+                  <li
+                    key={categ}
+                    className="categItem flex flex-row flex-wrap px-0.5 py-0.5 justify-between items-center lg:py-1 font-inter font-medium text-xs lg:text-sm text-(--preto) hover:bg-[#C9C9C9] rounded-[5px]"
+                    onClick={() => {
+                      setSelect(categ);
+                    }}
+                  >
+                    {categ}
+                    <BtnDeleteManage
+                      index={index}
+                      onRemoveCateg={removeCateg}
+                    />
+                  </li>
+                );
+              })
+            ) : (
+              <p className="py-5 font-inter text-(--preto) font-medium text-xs lg:text-sm text-center w-full">
+                Nenhuma categoria aqui, crie uma ao clicar em 'Criar nova
+                categoria'!
+              </p>
+            )}
           </ul>
 
           {/* Botões */}
