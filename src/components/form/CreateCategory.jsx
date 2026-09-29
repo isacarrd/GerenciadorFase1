@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { criarCategoria } from "../../data/criarCategoria";
 
-export default function CreateCategory({ isOpen, onClose }) {
-  const [nomeCategNova, setNomeCategNova] = useState("")
+export default function CreateCategory({ isOpen, onClose,  }) {
+  const [nomeCategNova, setNomeCategNova] = useState("");
   // função de acessibilidade
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -44,7 +43,7 @@ export default function CreateCategory({ isOpen, onClose }) {
               required
               name="categName"
               value={nomeCategNova}
-              onChange={e => setNomeCategNova(e.target.value)}
+              onChange={(e) => setNomeCategNova(e.target.value)}
               id="categName"
               className="bg-(--verdeSec) rounded-[5px] px-2.5 lg:px-3 py-2 text-(--branco) font-inter italic text-[10px] lg:text-xs
               placeholder:font-inter placeholder:text-(--branco) placeholder:italic placeholder:text-[10px] placeholder:lg:text-xs focus:outline-none"
@@ -67,7 +66,8 @@ export default function CreateCategory({ isOpen, onClose }) {
               placeholder="Ex: 'Ferramentas para construção'."
             />
           </div>
-          <div id="buttonsCreateCategory"
+          <div
+            id="buttonsCreateCategory"
             className="w-full font-inter font-medium text-[10px] lg:text-xs flex flex-row justify-end gap-3 lg:gap-4"
           >
             <button
@@ -87,7 +87,8 @@ export default function CreateCategory({ isOpen, onClose }) {
               onClick={() => {
                 if (criarCategoria({ nomeCategNova })) {
                   setNomeCategNova("");
-                  onClose()
+                  
+                  onClose();
                 } else {
                   setNomeCategNova("");
                 }
