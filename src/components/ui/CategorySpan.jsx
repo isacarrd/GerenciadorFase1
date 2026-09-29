@@ -2,7 +2,7 @@ import { useState } from "react";
 import { produtosTeste } from "../../data/listaProdutosTeste";
 import selectIco from "../../assets/select.svg";
 import removeIco from "../../assets/removeBlack.svg"
-import { getCategoriasUnicas } from "../../data/criarCategoria";
+import { useCategorias } from "../../hooks/useCategorias";
 
 export function CategorySpanMain({ children }) {
   return (
@@ -32,7 +32,7 @@ export function SelectCategory({ onChange }) {
   const [selected, setSelected] = useState("Categorias");
   const [open, setOpen] = useState(false);
 
-  const categorias = ["Categorias", ...getCategoriasUnicas()];
+  const categorias = ["Categorias", ...useCategorias()];
 
 // Encontra a maior palavra da lista (incluindo o placeholder) para definir a largura
   const maiorPalavra = [...categorias, "Categoria"].reduce(
@@ -104,7 +104,7 @@ export function SelectCategory({ onChange }) {
 export function SelectCategoryCreate({ index, valorAtual, todasSelecionadas, onRemove, onSelect }) {
   const [open, setOpen] = useState(false);
 
-  const categorias = ["Categorias", ...getCategoriasUnicas()];
+  const categorias = ["Categorias", ...useCategorias()];
 
   // Remove as que já estão no array do pai, EXCETO a que está selecionada neste exato campo
   const categoriasDisponiveis = categorias.filter(
