@@ -11,9 +11,17 @@ export function BtnDelete({ onDelete }) {
 }
 
 // Só muda a estilização -> Btn do gerenciador de categorias
-export function BtnDeleteManage({ onRemoveCateg, index }) {
+export function BtnDeleteManage({ onRemoveCateg, categoria }) {
   return (
-    <button onClick={() => onRemoveCateg(index)} className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-[#e2b5b3]">
+    <button
+      type="button"
+      aria-label={`Remover categoria ${categoria}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        onRemoveCateg(categoria)
+      }}
+      className="cursor-pointer w-fit h-fit flex p-1 border lg:p-2 lg:border-2 border-(--error) rounded-[20px] lg:rounded-[40px] hover:bg-[#e2b5b3]"
+    >
       <img
         src={deleteIco}
         alt="Deletar"
