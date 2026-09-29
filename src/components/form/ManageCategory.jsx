@@ -1,50 +1,60 @@
 import { useEffect, useState } from "react";
 import exitIco from "../../assets/removeBlack.svg";
-import { getCategoriasUnicas } from "../../data/criarCategoria";
+import { deleteCategoria, removerCategoriasDosProdutos } from "../../data/criarCategoria";
 import { BtnDeleteManage } from "../ui/BotaoDeletar";
 import CreateCategory from "./CreateCategory";
+import { useCategorias } from "../../hooks/useCategorias";
 
-export default function ManageCategory({ isOpen, onClose }) {
+export default function ManageCategory({ isOpen, onClose, setProdutos }) {
   const [select, setSelect] = useState("");
-  const [categorias, setCategorias] = useState(getCategoriasUnicas());
-  const [abrirModalCreateCateg, setAbrirModalCreateCateg] = useState(null);
-  const handleCloseModalCreateCateg = () => {
-    setAbrirModalCreateCateg(null);
-  };
+  const todasCategorias = useCategorias();
+  const [pendentesRemocao, setPendentesRemocao] = useState([]);
+  const [abrirModalCreateCateg, setAbrirModalCreateCateg] = useState(false);
 
-  // função de acessibilidade
+  // lista visível = todas menos as marcadas para remoção
+  const categorias = todasCategorias.filter(
+    (categ) => !pendentesRemocao.includes(categ)
+  );
+
+  // descarta remoções não salvas sempre que o modal abre
+  useEffect(() => {
+    if (isOpen) setPendentesRemocao([]);
+  }, [isOpen]);
+
+  // Escape só fecha este modal se o de criar não estiver aberto
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
     };
-
-    // só add o listener se o modal estiver aberto
-    if (isOpen) {
+    if (isOpen && !abrirModalCreateCateg) {
       document.addEventListener("keydown", handleKeyDown);
     }
-    // remove o listener quando o modal fechar ou desmontar
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, abrirModalCreateCateg, onClose]);
+
+  const handleCloseModalCreateCateg = () => {
+    setAbrirModalCreateCateg(null);
+  };
+
+  // Remove apenas visualmente -> a remoção permanente acontece em Salvar
+  const removeCateg = (nomeCateg) => {
+    setPendentesRemocao((atuais) => [...atuais, nomeCateg]);
+  };
+
+  const salvarAlteracoes = () => {
+    if (pendentesRemocao.length > 0) {
+      pendentesRemocao.forEach((categ) => deleteCategoria(categ));
+      setProdutos((prev) =>
+        removerCategoriasDosProdutos(prev, pendentesRemocao)
+      );
+    }
+    setPendentesRemocao([]);
+    onClose();
+  };
 
   if (!isOpen) return null;
-
-  // // para testes
-  // useEffect(() => {
-  //   console.log(select);
-  // }, [select]);
-
-  // const acharIndexCateg = (nomeCateg) => {
-  //   const index = categorias.indexOf(nomeCateg)
-  //   return index
-  // }
-
-  const removeCateg = (index) => {
-    setCategorias((categoriasAtuais) => {
-      return categoriasAtuais.filter((_, i) => i !== index);
-    });
-  };
 
   return (
     <div className="w-screen h-dvh fixed top-0 left-0 z-9999 flex items-center justify-center bg-black/50">
@@ -66,19 +76,16 @@ export default function ManageCategory({ isOpen, onClose }) {
           {/* Categorias */}
           <ul className="flex flex-col gap-2.25 p-3 lg:gap-4.5 bg-(--cinza) rounded-[5px]">
             {categorias.length > 0 ? (
-              categorias.map((categ, index) => {
-                // const indexCateg = acharIndexCateg(categ)
+              categorias.map((categ) => {
                 return (
                   <li
                     key={categ}
                     className="categItem flex flex-row flex-wrap px-0.5 py-0.5 justify-between items-center lg:py-1 font-inter font-medium text-xs lg:text-sm text-(--preto) hover:bg-[#C9C9C9] rounded-[5px]"
-                    onClick={() => {
-                      setSelect(categ);
-                    }}
+                    onClick={() => setSelect(categ)}
                   >
                     {categ}
                     <BtnDeleteManage
-                      index={index}
+                      categoria={categ}
                       onRemoveCateg={removeCateg}
                     />
                   </li>
@@ -104,6 +111,7 @@ export default function ManageCategory({ isOpen, onClose }) {
             </button>
             <button
               type="button"
+              onClick={salvarAlteracoes}
               id="newAlterationsCategory"
               aria-label="Botão de salvar alterações nas categorias"
               className="cursor-pointer border-2 border-(--verdePrim) rounded-[5px] p-3 text-(--branco) bg-(--verdePrim) hover:text-(--preto)"
