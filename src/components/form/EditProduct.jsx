@@ -4,6 +4,7 @@ import uploadIcon from "../../assets/upload.svg";
 import { readImage } from "../../data/readImage";
 import { useCharCounter } from "../../data/useCharCounter";
 import { validarCampos } from "../../data/validacaoSimples";
+import { CATEGORIA_EXCLUIDA } from "../../data/criarCategoria";
 
 import { BtnDelete } from "../ui/BotaoDeletar";
 import CategoryCamp from "./CategoryCamp";
@@ -57,7 +58,10 @@ export default function EditProduct({
     const alteracoes = {};
     if (prodNomeNova.trim() !== "") alteracoes.nomeProduto = prodNomeNova;
     if (prodDescNova.trim() !== "") alteracoes.descProduto = prodDescNova;
-    if (prodCategNova.length > 0) alteracoes.categProduto = prodCategNova;
+    if (prodCategNova.length > 0) {
+      const reais = prodCategNova.filter((cat) => cat !== CATEGORIA_EXCLUIDA);
+      alteracoes.categProduto = reais.length > 0 ? reais : prodCategNova;
+    }
     if (prodQuantNova !== "") alteracoes.quantProduto = Number(prodQuantNova);
     alteracoes.imgProduto = prodImgNova; // sempre atualiza (seja a antiga ou a nova selecionada)
 
