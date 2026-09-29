@@ -102,7 +102,7 @@ export default function ProductSection({ produtos, setProdutos }) {
           <CreateCategory isOpen={true} onClose={handleCloseCateg} />
         )}
         {modalGerenciarCateg && (
-          <ManageCategory isOpen={true} onClose={handleCloseGarenc} />
+          <ManageCategory isOpen={true} onClose={handleCloseGarenc} setProdutos={setProdutos} />
         )}
       </div>
     </section>
